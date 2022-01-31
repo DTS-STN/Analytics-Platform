@@ -8,18 +8,10 @@ locals {
   }
 }
 
-# Create Azure resource group
+ Create Azure resource group
 resource "azurerm_resource_group" "saeb" {
-  name     = "SAEB-DataAnalytics-${local.build_environment}"
+  name     = "SAEB-DataAnalytics"
   location = var.location 
-
-  tags = merge(
-    local.common_tags,
-    {
-      Environment = local.build_environment
-      BuildVersion = var.terraform_script_version
-    }
-  )
 }
 
 # Create ADF
