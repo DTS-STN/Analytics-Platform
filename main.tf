@@ -8,7 +8,6 @@ locals {
   }
 }
 
- Create Azure resource group
 resource "azurerm_resource_group" "saeb" {
   name     = "SAEB-DataAnalytics"
   location = var.location 
