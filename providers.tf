@@ -24,6 +24,5 @@ provider "azurerm" {
   skip_provider_registration = true
 }
 
-provider "databricks" {
-  azure_workspace_resource_id = azurerm_databricks_workspace.saeb_databricks_workspace.id
-}
+provider "databricks"{} 
+
