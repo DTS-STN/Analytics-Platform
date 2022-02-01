@@ -64,9 +64,9 @@ resource "azurerm_databricks_workspace" "saeb_databricks_workspace" {
   tags = local.common_tags
 }
 
-resource "databricks_repo" "saeb_databricks_repo" {
-  url = "https://github.com/DTS-STN/AP-Databricks.git"
-}
+#resource "databricks_repo" "saeb_databricks_repo" {
+#  url = "https://github.com/DTS-STN/AP-Databricks.git"
+#}
 
 
 # Create logic app + storage account + app service plan that all work together
