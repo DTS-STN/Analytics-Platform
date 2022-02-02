@@ -7,4 +7,4 @@ It will leverage the following repositories to bring the code into the Azure res
 
 - [AP-Databricks](https://github.com/DTS-STN/AP-Databricks)
 - [AP-DataFactory](https://github.com/DTS-STN/AP-DataFactory)
-- AP-Synapse (to be created)
+- [AP-Synapse](https://github.com/DTS-STN/AP-Synapse)
