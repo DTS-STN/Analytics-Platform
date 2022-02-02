@@ -24,7 +24,7 @@ resource "random_string" "random" {
 
 # Create storage account for main input and curated CSV files as well as for synapse filesystem
 resource "azurerm_storage_account" "saeb_storage" {
-  name                     = "stsaebdevca01${random_string.random.result}"
+  name                     = "stapsndbxca01${random_string.random.result}"
   resource_group_name      = "${data.azurerm_resource_group.saeb.name}"
   location                 = "${data.azurerm_resource_group.saeb.location}"
   account_tier             = "Standard"
