@@ -2,7 +2,8 @@
 locals {
   build_environment = var.environment == "production" ? "Prod" : "Dev"
   common_tags = {
-    Product      = "SAEB Platform"
+    ProductPortfolio = "SAEB"
+    Product      = "SAEB Analytics Platform"
     ProductOwner = "Shaun Laughland"
     CreatedBy    = "Terraform"
   }
