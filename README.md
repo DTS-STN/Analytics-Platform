@@ -10,4 +10,6 @@ It will leverage the following repositories to bring the code into the Azure res
 - [AP-DataFactory](https://github.com/DTS-STN/AP-DataFactory)
 - [AP-Synapse](https://github.com/DTS-STN/AP-Synapse)
 
-Inital version Terraform scripts are included.
+Inital version Terraform scripts are included to build the Azure services. These scripts will be executed using Teamcit pipeline (https://teamcity.dts-stn.com/admin/editProject.html?projectId=saeb_dev). 
+This teamcity pipeline has the trigger to run every time content of the Main branch changes. Currently this trigger is disabled since we are still in the development mode. 
+
