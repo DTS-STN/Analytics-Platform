@@ -10,8 +10,4 @@ It will leverage the following repositories to bring the code into the Azure res
 - [AP-DataFactory](https://github.com/DTS-STN/AP-DataFactory)
 - [AP-Synapse](https://github.com/DTS-STN/AP-Synapse)
 
-Inital version Terraform scripts are included. Following are the files
-- variables.tf
-- terraform.tfvars
-- providers.tf
-- main.tf
+Inital version Terraform scripts are included.
