@@ -137,15 +137,26 @@ resource "azurerm_key_vault" "saeb_keyvault" {
     object_id = data.azurerm_client_config.current.object_id # replace this with service principal
 
     key_permissions = [
-      "Get",
+      "create",
+      "get",
     ]
 
     secret_permissions = [
-      "Get",
+      "set",
+      "get",
+      "delete",
+      "purge",
+      "recover"
     ]
 
     storage_permissions = [
-      "Get",
+      "get",
     ]
   }
+}
+
+resource "azurerm_key_vault_secret" "saeb_test_secret" {
+  name         = "secret-sauce"
+  value        = "szechuan"
+  key_vault_id = azurerm_key_vault.saeb_keyvault.id
 }
