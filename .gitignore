@@ -1,7 +1,12 @@
 .DS_Store
 .terraform.lock.hcl
+
 # Local .terraform directories
 **/.terraform/*
+
 # .tfstate files
 *.tfstate
 *.tfstate.*
+
+# Script for setting up env variables to use when running terraform scripts/testing in Cloud Shell
+tf_env.sh
