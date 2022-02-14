@@ -164,7 +164,7 @@ resource "azurerm_key_vault" "saeb_keyvault" {
 
 resource "azurerm_key_vault_secret" "saeb_test_secret" {
   name         = "secret-sauce"
-  value        = "szechuan"
+  value        = "szechuan pass"
   key_vault_id = azurerm_key_vault.saeb_keyvault.id
 }
 
