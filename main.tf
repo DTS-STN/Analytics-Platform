@@ -1,6 +1,7 @@
 # Declare some local variables
 locals {
-  build_environment = var.environment == "production" ? "Prod" : "Dev"
+build_environment = "${var.environment}"
+# == "production" ? "Prod" : (var.environment == "development" ? "Dev" : "Sndbx")
   common_tags = {
     ProductPortfolio = "SAEB"
     Product      = "SAEB Analytics Platform"
@@ -11,20 +12,12 @@ locals {
 
 # Refer to existing Azure resource group
 data "azurerm_resource_group" "saeb" {
-  name     = "SAEB-AnalyticsPlatform-Sndbx"
+  name     = "SAEB-AnalyticsPlatform-${local.build_environment}"
 }
-
-resource "random_string" "random" {
-  length = 4
-  upper = false
-  special = false
-  number = false
-}
-
 
 # Create storage account for main input and curated CSV files as well as for synapse filesystem
 resource "azurerm_storage_account" "saeb_storage" {
-  name                     = "stapsndbxca01${random_string.random.result}"
+  name                     = lower("stsaebbi${local.build_environment}ca01")
   resource_group_name      = "${data.azurerm_resource_group.saeb.name}"
   location                 = "${data.azurerm_resource_group.saeb.location}"
   account_tier             = "Standard"
@@ -34,7 +27,7 @@ resource "azurerm_storage_account" "saeb_storage" {
 }
 
 resource "azurerm_storage_data_lake_gen2_filesystem" "saeb_data_lake_fs" {
-  name               = "fssynapseworkspace"
+  name               = lower("fs-saeb-synapseworkspace-${local.build_environment}-ca-01")
   storage_account_id = azurerm_storage_account.saeb_storage.id
 }
 
@@ -49,7 +42,7 @@ resource "azurerm_storage_container" "saeb_storage_container" {
 
 # Create ADF
 resource "azurerm_data_factory" "saeb_adf" {
-  name                = "adf-saeb-dev-01-${random_string.random.result}"
+  name                = lower("adf-saeb-ap-${local.build_environment}-ca-01")
   location            = "${data.azurerm_resource_group.saeb.location}"
   resource_group_name = "${data.azurerm_resource_group.saeb.name}"
 }
@@ -57,7 +50,7 @@ resource "azurerm_data_factory" "saeb_adf" {
 
 # Create Databricks workspace and associate with a repo
 resource "azurerm_databricks_workspace" "saeb_databricks_workspace" {
-  name                = "dbw-saeb-dev-01-${random_string.random.result}"
+  name                = lower("dbw-saeb-ap-${local.build_environment}-ca-01")
   resource_group_name = "${data.azurerm_resource_group.saeb.name}"
   location            = "${data.azurerm_resource_group.saeb.location}"
   sku                 = "standard"
@@ -72,7 +65,7 @@ resource "azurerm_databricks_workspace" "saeb_databricks_workspace" {
 
 # Create logic app + storage account + app service plan that all work together
 resource "azurerm_storage_account" "saeb_logic_app_storage" {
-  name                     = "salogicappdevca02${random_string.random.result}"
+  name                     = lower("stsaeblogic${local.build_environment}ca01")
   resource_group_name      = "${data.azurerm_resource_group.saeb.name}"
   location                 = "${data.azurerm_resource_group.saeb.location}"
   account_tier             = "Standard"
@@ -80,7 +73,7 @@ resource "azurerm_storage_account" "saeb_logic_app_storage" {
 }
 
 resource "azurerm_app_service_plan" "saeb_service_plan" {
-  name                = "asp-saeb-dev-02-${random_string.random.result}"
+  name                = lower("asp-saeb-ap-${local.build_environment}-ca-01")
   location            = "${data.azurerm_resource_group.saeb.location}"
   resource_group_name = "${data.azurerm_resource_group.saeb.name}"
 
@@ -91,7 +84,7 @@ resource "azurerm_app_service_plan" "saeb_service_plan" {
 }
 
 resource "azurerm_logic_app_standard" "saeb_logic_app" {
-  name                       = "logic-saeb-dev-01-${random_string.random.result}"
+  name                       = lower("logic-saeb-ap-${local.build_environment}-ca-01")
   location                   = "${data.azurerm_resource_group.saeb.location}"
   resource_group_name        = "${data.azurerm_resource_group.saeb.name}"
   app_service_plan_id        = azurerm_app_service_plan.saeb_service_plan.id
@@ -101,7 +94,7 @@ resource "azurerm_logic_app_standard" "saeb_logic_app" {
 
 # Create Synapse workspace with dedicated SQL Pool
 resource "azurerm_synapse_workspace" "saeb_synapse" {
-  name                                 = "synw-saeb-dev-01-${random_string.random.result}"
+  name                                 = lower("synw-saeb-ap-${local.build_environment}-ca-01")
   resource_group_name                  = "${data.azurerm_resource_group.saeb.name}"
   location                             = "${data.azurerm_resource_group.saeb.location}"
   storage_data_lake_gen2_filesystem_id = azurerm_storage_data_lake_gen2_filesystem.saeb_data_lake_fs.id
@@ -110,7 +103,7 @@ resource "azurerm_synapse_workspace" "saeb_synapse" {
 }
 
 resource "azurerm_synapse_sql_pool" "saeb_synapse_sqlpool" {
-  name                 = "syn_sqlpool_saeb_dev_01"
+  name                 = lower("syndp_saeb_ap_${local.build_environment}_ca_01")
   synapse_workspace_id = azurerm_synapse_workspace.saeb_synapse.id
   sku_name             = "DW100c"
   create_mode          = "Default"
