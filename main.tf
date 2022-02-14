@@ -134,6 +134,7 @@ resource "azurerm_key_vault" "saeb_keyvault" {
 
   access_policy {
     tenant_id = data.azurerm_client_config.current.tenant_id
+   
     # TODO: replace this with service principal - right now this refers to the user
     object_id = data.azurerm_client_config.current.object_id
 
