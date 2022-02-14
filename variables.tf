@@ -7,8 +7,8 @@ variable "storage_containers" {
 }
 
 # These variables need to be assigned in TeamCity build step. Credentials for Adobe Analytics and Statscan.
-variable "aa_cient_id" {type = string}
-variable "aa_cient_secret" {type = string}
+variable "aa_client_id" {type = string}
+variable "aa_client_secret" {type = string}
 variable "aa_global_company_id" {type = string}
 variable "aa_org_id" {type = string}
 variable "aa_private_key" {type = string}
