@@ -167,3 +167,9 @@ resource "azurerm_key_vault_secret" "saeb_test_secret" {
   value        = "szechuan"
   key_vault_id = azurerm_key_vault.saeb_keyvault.id
 }
+
+resource "azurerm_key_vault_secret" "aa_client_id" {
+  name         = "aa_client_id"
+  value        = var.aa_client_id
+  key_vault_id = azurerm_key_vault.saeb_keyvault.id
+}
