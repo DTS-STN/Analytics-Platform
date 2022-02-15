@@ -114,7 +114,7 @@ resource "azurerm_synapse_sql_pool" "saeb_synapse_sqlpool" {
 data "azurerm_client_config" "current" {}
 
 resource "azurerm_key_vault" "saeb_keyvault" {
-  name                        = lower("keyvault-saeb-ap-${local.build_environment}-ca-01")
+  name                        = lower("kv-saeb-ap-${local.build_environment}ca01")
   location                    = "${data.azurerm_resource_group.saeb.location}"
   resource_group_name         = "${data.azurerm_resource_group.saeb.name}"
   enabled_for_disk_encryption = true
