@@ -133,6 +133,7 @@ resource "azurerm_key_vault" "saeb_keyvault" {
     key_permissions = [
       "create",
       "get",
+      "list"
     ]
 
     secret_permissions = [
@@ -140,7 +141,8 @@ resource "azurerm_key_vault" "saeb_keyvault" {
       "get",
       "delete",
       "purge",
-      "recover"
+      "recover",
+      "list"
     ]
 
     storage_permissions = [
