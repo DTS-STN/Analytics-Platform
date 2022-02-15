@@ -167,3 +167,51 @@ resource "azurerm_key_vault_secret" "aa_client_id" {
   value        = var.aa_client_id
   key_vault_id = azurerm_key_vault.saeb_keyvault.id
 }
+
+resource "azurerm_key_vault_secret" "aa_client_secret" {
+  name         = "aa-client-secret"
+  value        = var.aa_client_secret
+  key_vault_id = azurerm_key_vault.saeb_keyvault.id
+}
+
+resource "azurerm_key_vault_secret" "aa_global_company_id" {
+  name         = "aa-global-company-id"
+  value        = var.aa_client_id
+  key_vault_id = azurerm_key_vault.saeb_keyvault.id
+}
+
+resource "azurerm_key_vault_secret" "aa_org_id" {
+  name         = "aa-org-id"
+  value        = var.aa_org_id
+  key_vault_id = azurerm_key_vault.saeb_keyvault.id
+}
+
+resource "azurerm_key_vault_secret" "aa_private_key" {
+  name         = "aa-private-key"
+  value        = var.aa_private_key
+  key_vault_id = azurerm_key_vault.saeb_keyvault.id
+}
+
+resource "azurerm_key_vault_secret" "aa_report_suite_id" {
+  name         = "aa-report-suite-id"
+  value        = var.aa_report_suite_id
+  key_vault_id = azurerm_key_vault.saeb_keyvault.id
+}
+
+resource "azurerm_key_vault_secret" "aa_subject_account" {
+  name         = "aa-subject-account"
+  value        = var.aa_subject_account
+  key_vault_id = azurerm_key_vault.saeb_keyvault.id
+}
+
+resource "azurerm_key_vault_secret" "statscan_username" {
+  name         = "statscan-username"
+  value        = var.statscan_username
+  key_vault_id = azurerm_key_vault.saeb_keyvault.id
+}
+
+resource "azurerm_key_vault_secret" "statscan_password" {
+  name         = "statscan-password"
+  value        = var.statscan_password
+  key_vault_id = azurerm_key_vault.saeb_keyvault.id
+}
