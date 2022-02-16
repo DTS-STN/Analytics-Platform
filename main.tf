@@ -1,7 +1,6 @@
 # Declare some local variables
 locals {
-build_environment = "${var.environment}"
-# == "production" ? "Prod" : (var.environment == "development" ? "Dev" : "Sndbx")
+  build_environment = lookup({sandbox="Sndbx", development="Dev", production="Prod"}, var.environment, "none")
   common_tags = {
     ProductPortfolio = "SAEB"
     Product      = "SAEB Analytics Platform"
@@ -58,9 +57,10 @@ resource "azurerm_databricks_workspace" "saeb_databricks_workspace" {
   tags = local.common_tags
 }
 
-#resource "databricks_repo" "saeb_databricks_repo" {
-#  url = "https://github.com/DTS-STN/AP-Databricks.git"
-#}
+resource "databricks_repo" "saeb_databricks_repo" {
+  count = local.build_environment == "Dev" ? 1 : 0
+  url = "https://github.com/DTS-STN/AP-Databricks.git"
+}
 
 
 # Create logic app + storage account + app service plan that all work together
