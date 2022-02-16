@@ -117,17 +117,49 @@ resource "azurerm_key_vault" "saeb_keyvault" {
   name                        = lower("kv-saeb-ap-${local.build_environment}ca01")
   location                    = "${data.azurerm_resource_group.saeb.location}"
   resource_group_name         = "${data.azurerm_resource_group.saeb.name}"
+  
   enabled_for_disk_encryption = true
-  tenant_id                   = data.azurerm_client_config.current.tenant_id
-  soft_delete_retention_days  = 7
   purge_protection_enabled    = false
+  soft_delete_retention_days  = 7
 
-  sku_name = "standard"
+  tenant_id                   = data.azurerm_client_config.current.tenant_id
+  sku_name                    = "standard"
+}
 
-  access_policy {
+# Create a Default Azure Key Vault access policy with Admin permissions
+resource "azurerm_key_vault_access_policy" "default_policy" {
+  key_vault_id = azurerm_key_vault.saeb_keyvault.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = data.azurerm_client_config.current.object_id
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  key_permissions = var.kv-key-permissions-full
+  secret_permissions = var.kv-secret-permissions-full
+  storage_permissions = var.kv-storage-permissions-full
+}
+
+# TODO: Create a Read only Azure Key Vault access policy for Engineering group
+# resource "azurerm_key_vault_access_policy" "default_policy" {
+#   key_vault_id = azurerm_key_vault.saeb_keyvault.id
+#   tenant_id    = data.azurerm_client_config.current.tenant_id
+#   object_id    = data.azurerm_client_config.current.object_id
+
+#   lifecycle {
+#     create_before_destroy = true
+#   }
+
+#   key_permissions = var.kv-key-permissions-read
+#   secret_permissions = var.kv-secret-permissions-read
+#   storage_permissions = var.kv-storage-permissions-read
+# }
+
+
+
+access_policy {
     tenant_id = data.azurerm_client_config.current.tenant_id
-   
-    # TODO: replace this with service principal - right now this refers to the user
     object_id = data.azurerm_client_config.current.object_id
 
     key_permissions = [
@@ -150,11 +182,7 @@ resource "azurerm_key_vault" "saeb_keyvault" {
     ]
   }
 
-  # Can have another access policy
-  # access_policy {
-  #
-  # }
-}
+
 
 resource "azurerm_key_vault_secret" "saeb_test_secret" {
   name         = "secret-sauce"
