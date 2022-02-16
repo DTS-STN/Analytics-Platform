@@ -30,7 +30,7 @@ To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
 version = "2021.2"
 
 project {
-    description = "Analytics platform project for infrastructure deployment using Terraform. Ver GK1.0"
+    description = "Analytics platform project for infrastructure deployment using Terraform. Ver GK2.0"
 
     vcsRoot(HttpsGithubComDtsStnAnalyticsPlatformGitRefsHeadsMain)
     vcsRoot(HttpsGithubComDtsStnAnalyticsPlatformRefsHeadsMain)
