@@ -26,6 +26,24 @@ variable "kv-storage-permissions-full" {
                   "purge", "recover", "regeneratekey", "restore", "set", "setsas", "update" ]
 }
 
+variable "kv-key-permissions-read" {
+  type        = list(string)
+  description = "List of read key permissions, must be one or more from the following: backup, create, decrypt, delete, encrypt, get, import, list, purge, recover, restore, sign, unwrapKey, update, verify and wrapKey"
+  default     = [ "get", "list" ]
+}
+
+variable "kv-secret-permissions-read" {
+  type        = list(string)
+  description = "List of full secret permissions, must be one or more from the following: backup, delete, get, list, purge, recover, restore and set"
+  default     = [ "get", "list" ]
+}
+
+variable "kv-storage-permissions-read" {
+  type        = list(string)
+  description = "List of read storage permissions, must be one or more from the following: backup, delete, deletesas, get, getsas, list, listsas, purge, recover, regeneratekey, restore, set, setsas and update"
+  default     = [ "get", "getsas", "list", "listsas" ]
+}
+
 # These variables need to be assigned in TeamCity build step. Credentials for Adobe Analytics and Statscan.
 variable "aa_client_id" {type = string}
 variable "aa_client_secret" {type = string}

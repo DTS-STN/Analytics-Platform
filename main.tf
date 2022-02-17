@@ -141,6 +141,10 @@ resource "azurerm_key_vault_access_policy" "default_policy" {
   storage_permissions = var.kv-storage-permissions-full
 }
 
+# object_id - (Required) The object ID of a user, service principal or security group in the Azure Active Directory 
+# tenant for the vault. The object ID must be unique for the list of access policies. Changing this forces a new 
+# resource to be created.
+
 # TODO: Create a Read only Azure Key Vault access policy for Engineering group
 # resource "azurerm_key_vault_access_policy" "default_policy" {
 #   key_vault_id = azurerm_key_vault.saeb_keyvault.id
