@@ -1,6 +1,5 @@
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.ScriptBuildStep
-import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.maven
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
 import jetbrains.buildServer.configs.kotlin.v2019_2.vcs.GitVcsRoot
@@ -30,13 +29,12 @@ To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
 version = "2021.2"
 
 project {
-    description = "Analytics platform project for infrastructure deployment using Terraform. Ver GK2.0"
+    description = "Analytics platform project for infrastructure deployment using Terraform. Ver GK1.0"
 
     vcsRoot(HttpsGithubComDtsStnAnalyticsPlatformGitRefsHeadsMain)
     vcsRoot(HttpsGithubComDtsStnAnalyticsPlatformRefsHeadsMain)
 
     buildType(BuildAndDeployAnalyticsPlatform)
-    buildType(TestAutoScriptBuild)
 
     params {
         param("env.SAEB-SP-PASSWORD", "%vault:SAEB/data/SAEB-Terraform!/password%")
@@ -114,27 +112,6 @@ object BuildAndDeployAnalyticsPlatform : BuildType({
     }
 })
 
-object TestAutoScriptBuild : BuildType({
-    name = "Test AutoScript Build"
-
-    vcs {
-        root(HttpsGithubComDtsStnAnalyticsPlatformRefsHeadsMain)
-    }
-
-    steps {
-        maven {
-            goals = "clean test"
-            pomLocation = ".teamcity/pom.xml"
-            runnerArgs = "-Dmaven.test.failure.ignore=true"
-        }
-    }
-
-    triggers {
-        vcs {
-        }
-    }
-})
-
 object HttpsGithubComDtsStnAnalyticsPlatformGitRefsHeadsMain : GitVcsRoot({
     name = "https://github.com/DTS-STN/Analytics-Platform.git#refs/heads/tf_test"
     url = "https://github.com/DTS-STN/Analytics-Platform.git"
@@ -151,4 +128,9 @@ object HttpsGithubComDtsStnAnalyticsPlatformRefsHeadsMain : GitVcsRoot({
     url = "https://github.com/DTS-STN/Analytics-Platform"
     branch = "refs/heads/sl"
     branchSpec = "refs/heads/*"
+    agentGitPath = "https://github.com/DTS-STN/Analytics-Platform/tree/sl/.teamcity"
+    authMethod = password {
+        userName = "git%env.GITHUB_USER%"
+        password = "credentialsJSON:c6109464-b0f8-44e7-aa2d-dc335f708785"
+    }
 })
